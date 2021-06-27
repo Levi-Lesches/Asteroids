@@ -22,31 +22,29 @@ public class ShipController : MonoBehaviour {
 		rigidbody = GetComponent<Rigidbody2D>();
 	}
 
-	bool ShouldFire() {
-		bool didDelayPass = shotsFired == 0  // need to wait a longer delay every [maxShots] shots
-			? timeSinceLastFired >= shootGroupDelay
-			: timeSinceLastFired >= shootDelay;
-		return Input.GetButton("Fire1") && didDelayPass;
+	void Fire() {
+		if (timeSinceLastFired < (shotsFired == 0 ? shootGroupDelay : shootDelay))
+			return;
+
+		GameObject spawned = Instantiate(  // Don't use parent here!
+			projectile, 
+			projectileSpawnPoint.position, 
+			projectileSpawnPoint.rotation
+		);
+		Vector2 velocity = (transform.rotation * Vector2.up) * projectileSpeed;
+		spawned.GetComponent<Rigidbody2D>().velocity = velocity;
+		timeSinceLastFired = 0f;
+		shotsFired++;
+		if (shotsFired == 4) {
+			shotsFired = 0;
+		}
 	}
 
 	void FixedUpdate() {
 		// Instantiate a new projectile and send it flying.
 		timeSinceLastFired += Time.fixedDeltaTime;
 		if (shotsFired > 0 && timeSinceLastFired >= shootGroupDelay) shotsFired = 0;
-		if (ShouldFire()) {
-			GameObject spawned = Instantiate(  // Don't use parent here!
-				projectile, 
-				projectileSpawnPoint.position, 
-				projectileSpawnPoint.rotation
-			);
-			Vector2 velocity = (transform.rotation * Vector2.up) * projectileSpeed;
-			spawned.GetComponent<Rigidbody2D>().velocity = velocity;
-			timeSinceLastFired = 0f;
-			shotsFired++;
-			if (shotsFired == 4) {
-				shotsFired = 0;
-			}
-		}
+		if (Input.GetButton("Fire1")) Fire();
 
 		// Rotate the ship
 		Vector3 rotation = Vector3.back * Input.GetAxis("Horizontal") * rotationSpeed * Time.fixedDeltaTime;
@@ -54,7 +52,7 @@ public class ShipController : MonoBehaviour {
 
 		// Push the ship forward
 		Vector2 force = Vector2.up * Input.GetAxis("Vertical") * speedBoost * Time.fixedDeltaTime;
-		rigidbody.AddRelativeForce(Vector2.up * force);
+		rigidbody.AddRelativeForce(force);
 		rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, maxSpeed);
 	}
 }
