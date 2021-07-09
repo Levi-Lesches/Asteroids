@@ -22,7 +22,7 @@ public class ShipController : MonoBehaviour {
 		rigidbody = GetComponent<Rigidbody2D>();
 	}
 
-	void Fire() {
+	public void Fire() {
 		if (timeSinceLastFired < (shotsFired == 0 ? shootGroupDelay : shootDelay))
 			return;
 

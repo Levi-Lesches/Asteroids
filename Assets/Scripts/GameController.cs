@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
 	public GameObject asteroid;
 	public GameObject ship;
+	public List<GameObject> enemies = new List<GameObject>();
 
 	public float invincibleDelay = 2f;
 	public float maxAsteroidSpeed = 1f;
@@ -41,27 +42,30 @@ public class GameController : MonoBehaviour {
 		Destructible.isInvincible = false;
 	}
 
+	void SpawnAsteroid(Vector3 position) {
+		GameObject obj = Instantiate(asteroid, position, GetRandomRotation());
+		Vector3 velocity = GetRandomVector(maxAsteroidSpeed, maxAsteroidSpeed);
+		enemies.Add(obj);
+		obj.GetComponent<Destructible>().controller = this;
+		obj.GetComponent<Rigidbody2D>().velocity = velocity;
+	}
+
 	void SpawnWave() {
+		enemies = new List<GameObject>();
 		StartCoroutine(MakePlayerInvincible());
 		waveNumber++;
 		int numAsteroids = waveNumber + 5;
 		asteroidsLeft = numAsteroids;
 		for (int _ = 0; _ < numAsteroids; _++) {
-			GameObject obj = Instantiate(asteroid, GetRandomVector(8, 4), GetRandomRotation());
-			Destructible script = obj.GetComponent<Destructible>();
-			Rigidbody2D rigidbody = obj.GetComponent<Rigidbody2D>();
-			script.controller = this;
-			rigidbody.velocity = GetRandomVector(maxAsteroidSpeed, maxAsteroidSpeed);
+			SpawnAsteroid(GetRandomVector(8, 4));
 		}
 	}
 
 	public void OnShipDestroyed() {
-		Debug.Log("The ship has been destroyed. Restarting...");
 		SceneManager.LoadScene("Main");
 	}
 
 	public void OnAsteroidDestroyed() {
-		Debug.Log("Asteroid has been destroyed.");
 		asteroidsLeft--;
 		if (asteroidsLeft == 0) {
 			// Debug.Log("You win!");

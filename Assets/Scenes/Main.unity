@@ -460,6 +460,7 @@ MonoBehaviour:
   asteroid: {fileID: 5974518208095632139, guid: 72957f328b3b8fa419ac792a0bb444ed,
     type: 3}
   ship: {fileID: 1128155702}
+  enemies: []
   invincibleDelay: 3
   maxAsteroidSpeed: 2
 --- !u!4 &1699995766
@@ -634,43 +635,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1128155707, guid: 94daec21d1689874f92017fd2be2a501, type: 3}
+    - target: {fileID: 1128155703, guid: 94daec21d1689874f92017fd2be2a501, type: 3}
       propertyPath: controller
       value: 
       objectReference: {fileID: 1699995765}
     - target: {fileID: 1128155707, guid: 94daec21d1689874f92017fd2be2a501, type: 3}
-      propertyPath: onDestroyed.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1128155707, guid: 94daec21d1689874f92017fd2be2a501, type: 3}
-      propertyPath: onDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1128155707, guid: 94daec21d1689874f92017fd2be2a501, type: 3}
-      propertyPath: onDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: controller
       value: 
       objectReference: {fileID: 1699995765}
-    - target: {fileID: 1128155707, guid: 94daec21d1689874f92017fd2be2a501, type: 3}
-      propertyPath: onDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1128155707, guid: 94daec21d1689874f92017fd2be2a501, type: 3}
-      propertyPath: onDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnShipDestroyed
-      objectReference: {fileID: 0}
-    - target: {fileID: 1128155707, guid: 94daec21d1689874f92017fd2be2a501, type: 3}
-      propertyPath: onDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1128155707, guid: 94daec21d1689874f92017fd2be2a501, type: 3}
-      propertyPath: onDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3908386800964017486, guid: 94daec21d1689874f92017fd2be2a501,
-        type: 3}
-      propertyPath: shootDelay
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 3908386800964017487, guid: 94daec21d1689874f92017fd2be2a501,
         type: 3}
       propertyPath: m_Name

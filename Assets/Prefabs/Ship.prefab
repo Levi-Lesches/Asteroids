@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1526941025}
   - component: {fileID: 1526941026}
   - component: {fileID: 1128155707}
+  - component: {fileID: 1128155703}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Player
@@ -53,7 +54,7 @@ MonoBehaviour:
     type: 3}
   projectileSpawnPoint: {fileID: 3908386802579450222}
   projectileSpeed: 15
-  shootDelay: 0.15
+  shootDelay: 0.1
   shootGroupDelay: 0.5
   maxShots: 4
   rotationSpeed: 300
@@ -124,6 +125,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2d9f0a9c0015947b373219225e2843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+--- !u!114 &1128155703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3908386800964017487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d37544df9622f4fbf833d539096335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  ship: {fileID: 3908386800964017486}
+  foresight: 3
+  trackInterval: 0.05
+  rotationSpeed: 5
 --- !u!1 &3908386801281812024
 GameObject:
   m_ObjectHideFlags: 0

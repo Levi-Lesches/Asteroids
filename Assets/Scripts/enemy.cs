@@ -1,5 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 public class Enemy : MonoBehaviour {
 	public GameObject player;
+	public GameObject projectile;
+	public Transform projectileSpawnPoint;
+
+	public float projectileSpeed;
 	public float randomError;
 	public float shootDelay;
 
