@@ -5,6 +5,8 @@ using UnityEngine;
 public class ShipController : MonoBehaviour {
 	public GameObject projectile;
 	public Transform projectileSpawnPoint;
+	public GameController controller;
+
 	public float projectileSpeed = 10f;
 	public float shootDelay = 0.25f;
 	public float shootGroupDelay = 1f;
@@ -44,10 +46,13 @@ public class ShipController : MonoBehaviour {
 		// Instantiate a new projectile and send it flying.
 		timeSinceLastFired += Time.fixedDeltaTime;
 		if (shotsFired > 0 && timeSinceLastFired >= shootGroupDelay) shotsFired = 0;
-		if (Input.GetButton("Fire1")) Fire();
+		if (!controller.isMobile && Input.GetButton("Fire1")) Fire();
 
 		// Rotate the ship
-		Vector3 rotation = Vector3.back * Input.GetAxis("Horizontal") * rotationSpeed * Time.fixedDeltaTime;
+		float input = controller.isMobile 
+			? controller.hud.rotationAxis 
+			: Input.GetAxis("Horizontal");
+		Vector3 rotation = Vector3.back * input * rotationSpeed * Time.fixedDeltaTime;
 		transform.Rotate(rotation);
 
 		// Push the ship forward

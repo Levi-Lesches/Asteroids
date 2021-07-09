@@ -5,26 +5,33 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 	public GameObject asteroid;
-	public GameObject ship;
+	public GameObject shipPrefab;
+	public GameObject player;
 	public List<GameObject> enemies = new List<GameObject>();
+	public HUDController hud;
 
 	public float invincibleDelay = 2f;
 	public float maxAsteroidSpeed = 1f;
 	public float asteroidOffset = 0.5f;
 	public int numLevels = 3;
 	public int lives = 3;
+	public bool isAimBotEnabled = true;
+	public bool isMobile = false;
 
 	private int waveNumber = 0;
 	private int asteroidsLeft = 0;
+	private bool isFiring = false;
 
 	// Start is called before the first frame update
 	void Start() {
+		SpawnPlayer();
 		SpawnWave();
+		hud.controls.SetActive(isMobile);
 	}
 
 	// Update is called once per frame
 	void Update() {
-		
+		if (isFiring) player.GetComponent<ShipController>().Fire();
 	}
 
 	Vector3 GetRandomVector(float xthreshold, float ythreshold) {
@@ -42,6 +49,15 @@ public class GameController : MonoBehaviour {
 		Destructible.isInvincible = true;
 		yield return new WaitForSeconds(invincibleDelay);
 		Destructible.isInvincible = false;
+	}
+
+	void SpawnPlayer() {
+		player = Instantiate(shipPrefab);
+		AimBot aimBot = player.GetComponent<AimBot>();
+		player.GetComponent<ShipController>().controller = this;
+		player.GetComponent<Destructible>().controller = this;
+		aimBot.controller = this;
+		aimBot.enabled = isAimBotEnabled;
 	}
 
 	void SpawnAsteroid(Vector3 position, int level) {
@@ -69,13 +85,10 @@ public class GameController : MonoBehaviour {
 
 	public void OnShipDestroyed() {
 		lives--;
-		if (lives == 0) {
+		if (lives == 0)
 			SceneManager.LoadScene("Main");
-		} else {
-			GameObject newShip = Instantiate(ship);
-			newShip.GetComponent<Destructible>().controller = this;
-			newShip.GetComponent<AimBot>().controller = this;
-		}
+		else 
+			SpawnPlayer();
 	}
 
 	public void OnAsteroidDestroyed(Vector3 position, int level) {
@@ -86,4 +99,11 @@ public class GameController : MonoBehaviour {
 			SpawnWave();
 		}
 	}
+
+	public void ToggleAimBot() {
+		isAimBotEnabled = !isAimBotEnabled;
+		player.GetComponent<AimBot>().enabled = isAimBotEnabled;
+	}
+
+	public void ToggleFiring() {isFiring = !isFiring;}
 }

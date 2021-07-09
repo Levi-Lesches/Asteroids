@@ -53,6 +53,7 @@ MonoBehaviour:
   projectile: {fileID: 4602926986396306540, guid: 2520a6101d494c8419cc34480cc4fae1,
     type: 3}
   projectileSpawnPoint: {fileID: 3908386802579450222}
+  controller: {fileID: 0}
   projectileSpeed: 15
   shootDelay: 0.1
   shootGroupDelay: 0.5
@@ -134,7 +135,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3908386800964017487}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5d37544df9622f4fbf833d539096335, type: 3}
   m_Name: 
