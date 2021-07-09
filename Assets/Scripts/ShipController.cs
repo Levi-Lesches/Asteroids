@@ -51,7 +51,7 @@ public class ShipController : MonoBehaviour {
 		// Rotate the ship
 		float input = controller.isMobile 
 			? controller.hud.rotationAxis 
-			: Input.GetAxis("Horizontal");
+			: Input.GetAxisRaw("Horizontal");
 		Vector3 rotation = Vector3.back * input * rotationSpeed * Time.fixedDeltaTime;
 		transform.Rotate(rotation);
 
