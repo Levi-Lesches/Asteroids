@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Border : MonoBehaviour {
+	public static float width, height;
+
 	public enum Axis {Horizontal, Vertical};
 	public Axis axis;
 	public bool isPositive;
@@ -15,8 +17,8 @@ public class Border : MonoBehaviour {
 		Camera camera = Camera.main;
 
 		Vector2[] edges = new Vector2[] {};
-		float height = camera.orthographicSize;
-		float width = camera.orthographicSize * camera.aspect;
+		height = camera.orthographicSize;
+		width = camera.orthographicSize * camera.aspect;
 		int factor = isPositive ? 1 : -1;
 
 		// Sizes and translates the edge colliders to fit the screen.

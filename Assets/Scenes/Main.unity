@@ -354,12 +354,6 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!1 &1128155702 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3908386800964017487, guid: 94daec21d1689874f92017fd2be2a501,
-    type: 3}
-  m_PrefabInstance: {fileID: 3908386802490824721}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1236152133
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,10 +453,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroid: {fileID: 5974518208095632139, guid: 72957f328b3b8fa419ac792a0bb444ed,
     type: 3}
-  ship: {fileID: 1128155702}
+  ship: {fileID: 3908386800964017487, guid: 94daec21d1689874f92017fd2be2a501, type: 3}
   enemies: []
   invincibleDelay: 3
-  maxAsteroidSpeed: 2
+  maxAsteroidSpeed: 0.75
+  asteroidOffset: 0.1
+  numLevels: 3
+  lives: 3
 --- !u!4 &1699995766
 Transform:
   m_ObjectHideFlags: 0

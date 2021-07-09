@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour {
 		StartCoroutine(MakePlayerInvincible());
 		waveNumber++;
 		for (int _ = 0; _ < waveNumber + 5; _++) {
-			SpawnAsteroid(GetRandomVector(8, 4), numLevels);
+			SpawnAsteroid(GetRandomVector(Border.width - 1, Border.height - 1), numLevels);
 		}
 	}
 
