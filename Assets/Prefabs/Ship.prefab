@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2d9f0a9c0015947b373219225e2843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 3
   controller: {fileID: 0}
 --- !u!114 &1128155703
 MonoBehaviour:
@@ -140,8 +141,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   ship: {fileID: 3908386800964017486}
-  foresight: 3
-  trackInterval: 0.05
+  foresight: 1
+  trackInterval: 0.15
   rotationSpeed: 5
 --- !u!1 &3908386801281812024
 GameObject:

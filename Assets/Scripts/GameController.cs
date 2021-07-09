@@ -10,6 +10,9 @@ public class GameController : MonoBehaviour {
 
 	public float invincibleDelay = 2f;
 	public float maxAsteroidSpeed = 1f;
+	public float asteroidOffset = 0.5f;
+	public int numLevels = 3;
+	public int lives = 3;
 
 	private int waveNumber = 0;
 	private int asteroidsLeft = 0;
@@ -24,7 +27,7 @@ public class GameController : MonoBehaviour {
 		
 	}
 
-	Vector2 GetRandomVector(float xthreshold, float ythreshold) {
+	Vector3 GetRandomVector(float xthreshold, float ythreshold) {
 		float randomX = Random.Range(-xthreshold, xthreshold);
 		float randomY = Random.Range(-ythreshold, ythreshold);
 		return new Vector2(randomX, randomY);
@@ -36,39 +39,50 @@ public class GameController : MonoBehaviour {
 	}
 
 	IEnumerator MakePlayerInvincible() {
-		// Destructible script = ship.GetComponent<Destructible>();
 		Destructible.isInvincible = true;
 		yield return new WaitForSeconds(invincibleDelay);
 		Destructible.isInvincible = false;
 	}
 
-	void SpawnAsteroid(Vector3 position) {
-		GameObject obj = Instantiate(asteroid, position, GetRandomRotation());
+	void SpawnAsteroid(Vector3 position, int level) {
+		if (level == 0) return;
 		Vector3 velocity = GetRandomVector(maxAsteroidSpeed, maxAsteroidSpeed);
+		GameObject obj = Instantiate(asteroid, position, GetRandomRotation());
+		Destructible script = obj.GetComponent<Destructible>();
+		float scale = Mathf.Pow(2, numLevels - level);
+		obj.transform.localScale /= scale;
+		obj.GetComponent<Rigidbody2D>().velocity = velocity * scale;
+		script.controller = this;
+		script.level = level;
 		enemies.Add(obj);
-		obj.GetComponent<Destructible>().controller = this;
-		obj.GetComponent<Rigidbody2D>().velocity = velocity;
+		asteroidsLeft++;
 	}
 
 	void SpawnWave() {
 		enemies = new List<GameObject>();
 		StartCoroutine(MakePlayerInvincible());
 		waveNumber++;
-		int numAsteroids = waveNumber + 5;
-		asteroidsLeft = numAsteroids;
-		for (int _ = 0; _ < numAsteroids; _++) {
-			SpawnAsteroid(GetRandomVector(8, 4));
+		for (int _ = 0; _ < waveNumber + 5; _++) {
+			SpawnAsteroid(GetRandomVector(8, 4), numLevels);
 		}
 	}
 
 	public void OnShipDestroyed() {
-		SceneManager.LoadScene("Main");
+		lives--;
+		if (lives == 0) {
+			SceneManager.LoadScene("Main");
+		} else {
+			GameObject newShip = Instantiate(ship);
+			newShip.GetComponent<Destructible>().controller = this;
+			newShip.GetComponent<AimBot>().controller = this;
+		}
 	}
 
-	public void OnAsteroidDestroyed() {
+	public void OnAsteroidDestroyed(Vector3 position, int level) {
 		asteroidsLeft--;
+		SpawnAsteroid(position + GetRandomVector(asteroidOffset, asteroidOffset), level - 1);
+		SpawnAsteroid(position + GetRandomVector(asteroidOffset, asteroidOffset), level - 1);
 		if (asteroidsLeft == 0) {
-			// Debug.Log("You win!");
 			SpawnWave();
 		}
 	}

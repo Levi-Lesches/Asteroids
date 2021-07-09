@@ -40,7 +40,7 @@ public class AimBot : MonoBehaviour {
 			Vector2 futurePosition = GetFuturePosition(target, time);
 			float distance = Vector2.Distance(transform.position, futurePosition);
 			float travelTime = distance / ship.projectileSpeed;
-			if (travelTime >= time && (travelTime - time) <= trackInterval) {  // this is the intercept point
+			if (travelTime <= time && (travelTime - time) <= trackInterval) {  // this is the intercept point
 				return futurePosition;
 			}
 		}

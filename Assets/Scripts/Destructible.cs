@@ -5,6 +5,7 @@ using UnityEngine;
 public class Destructible : MonoBehaviour {
 	public static bool isInvincible = false;
 
+	public int level = 3;
 	public GameController controller;
 
 	// Start is called before the first frame update
@@ -24,7 +25,7 @@ public class Destructible : MonoBehaviour {
 		// collisions in the "Enemy" layer.
 		if (other.CompareTag("Projectile") || (!isInvincible && !other.CompareTag("Border"))) {
 			if (gameObject.CompareTag("Asteroid")) {
-				controller.OnAsteroidDestroyed();
+				controller.OnAsteroidDestroyed(transform.position, level);
 			} else if (gameObject.CompareTag("Player")) {
 				controller.OnShipDestroyed();
 			}
