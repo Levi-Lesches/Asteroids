@@ -4,20 +4,30 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
+	// Prefabs
 	public GameObject asteroid;
 	public GameObject shipPrefab;
-	public GameObject player;
+
+	// state
 	public List<GameObject> enemies = new List<GameObject>();
+	public GameObject player;
 	public HUDController hud;
 
+	// Config
 	public float invincibleDelay = 2f;
 	public float maxAsteroidSpeed = 1f;
 	public float asteroidOffset = 0.5f;
 	public int numLevels = 3;
+	public int[] asteroidPoints = {100, 50, 20};
+	public int pointsPerLife = 10_000;
+
+	// Public state
 	public int lives = 3;
+	public int points = 0;
 	public bool isAimBotEnabled = true;
 	public bool isMobile = false;
 
+	// Private state
 	private int waveNumber = 0;
 	private int asteroidsLeft = 0;
 	private bool isFiring = false;
@@ -92,6 +102,10 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void OnAsteroidDestroyed(Vector3 position, int level) {
+		int oldLives = points / pointsPerLife;
+		points += asteroidPoints [level];
+		int newLives = points / pointsPerLife;
+		if (newLives != oldLives) lives++;
 		asteroidsLeft--;
 		SpawnAsteroid(position + GetRandomVector(asteroidOffset, asteroidOffset), level - 1);
 		SpawnAsteroid(position + GetRandomVector(asteroidOffset, asteroidOffset), level - 1);
