@@ -74,6 +74,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void SpawnPlayer() {
+		StartCoroutine(MakePlayerInvincible());
 		player = Instantiate(shipPrefab);
 		AimBot aimBot = player.GetComponent<AimBot>();
 		player.GetComponent<ShipController>().controller = this;
