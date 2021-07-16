@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AimBot : MonoBehaviour { 
@@ -24,8 +25,9 @@ public class AimBot : MonoBehaviour {
 	GameObject? GetNearestTarget() {
 		float? minDistance = null;
 		GameObject? target = null;
-		foreach (GameObject enemy in controller.enemies) {
+		foreach (GameObject enemy in controller.enemies.Concat(controller.asteroids)) {
 			if (enemy == null) continue;
+			else if (enemy.CompareTag("Enemy")) return enemy;
 			float distance = Vector3.Distance(transform.position, enemy.transform.position);
 			if (minDistance == null || distance < minDistance) {
 				minDistance = distance;

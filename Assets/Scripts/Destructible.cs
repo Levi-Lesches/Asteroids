@@ -28,6 +28,8 @@ public class Destructible : MonoBehaviour {
 				controller.OnAsteroidDestroyed(transform.position, level);
 			} else if (gameObject.CompareTag("Player")) {
 				controller.OnShipDestroyed();
+			} else if (gameObject.CompareTag("Enemy")) {
+				controller.onEnemyShipDestroyed();
 			}
 
 			Destroy(gameObject);

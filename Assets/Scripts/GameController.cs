@@ -7,15 +7,16 @@ public class GameController : MonoBehaviour {
 	// Prefabs
 	public GameObject asteroid;
 	public GameObject shipPrefab;
-	public GameObject enemyShip1Big;
+	public GameObject enemyShipBig;
 	public GameObject enemyShipSmall;
 
-	// state
+	// Other GameObjects to track
 	public List<GameObject> enemies = new List<GameObject>();
+	public List<GameObject> asteroids = new List<GameObject>();
 	public GameObject player;
 	public HUDController hud;
 
-	// Config
+	// Config -- consider moving this elsewhere
 	public float invincibleDelay = 2f;
 	public float maxAsteroidSpeed = 1f;
 	public float asteroidOffset = 0.5f;
@@ -34,10 +35,11 @@ public class GameController : MonoBehaviour {
 
 	// Private state
 	private float timeSinceEnemyShip = 0f;
-	private int enemySpawnDelay = 30f;
+	private int enemySpawnDelay = 30;
 	private int waveNumber = 0;
 	private int asteroidsLeft = 0;
 	private bool isFiring = false;
+	private bool enemyShipPresent = false;
 
 	// Start is called before the first frame update
 	void Start() {
@@ -49,11 +51,8 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		if (isFiring) player.GetComponent<ShipController>().Fire();
-	}
-
-	void FixedUpdate() {
-		timeSinceEnemyShip += Time.fixedDeltaTime;
-		if (timeSinceEnemyShip >= enemySpawnDelay) SpawnEnemyShip();
+		timeSinceEnemyShip += Time.deltaTime;
+		if (timeSinceEnemyShip >= enemySpawnDelay && !enemyShipPresent) SpawnEnemyShip();
 	}
 
 	Vector3 GetRandomVector(float xthreshold, float ythreshold) {
@@ -93,13 +92,14 @@ public class GameController : MonoBehaviour {
 		obj.GetComponent<Rigidbody2D>().velocity = velocity * scale;
 		script.controller = this;
 		script.level = level;
-		enemies.Add(obj);
+		asteroids.Add(obj);
 		asteroidsLeft++;
 	}
 
 	void SpawnWave() {
 		timeSinceEnemyShip = 0f;
-		enemySpawnDelay = 30f;
+		enemySpawnDelay = 30;
+		asteroids = new List<GameObject>();
 		enemies = new List<GameObject>();
 		StartCoroutine(MakePlayerInvincible());
 		waveNumber++;
@@ -109,11 +109,18 @@ public class GameController : MonoBehaviour {
 	}
 
 	void SpawnEnemyShip() {
-		timeSinceEnemyShip = 0f;
-		if (enemySpawnDelay > 10) enemySpawnDelay -= 10;
+		// Configure enemy ship
 		GameObject prefab = points > pointsBeforeSmallShip 
 			? enemyShipSmall : enemyShipBig;
-		/* TODO: Spawn */
+		int direction = (Random.value > 0.5f) ? 1 : -1;
+		Vector3 position = new Vector3(Border.width * 5/6 * direction, Border.height * 3/4 * direction, 0);
+		GameObject obj = Instantiate(prefab, position, Quaternion.identity);
+		obj.GetComponent<Destructible>().controller = this;
+		obj.GetComponent<Enemy>().controller = this;
+
+		// Update state
+		enemies.Add(obj);
+		enemyShipPresent = true;
 		asteroidsLeft++;
 	}
 
@@ -133,18 +140,22 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void OnAsteroidDestroyed(Vector3 position, int level) {
-		AddPoints(asteroidPoints [level]);
-		asteroidsLeft--;
+		AddPoints(asteroidPoints [level - 1]);
 		SpawnAsteroid(position + GetRandomVector(asteroidOffset, asteroidOffset), level - 1);
 		SpawnAsteroid(position + GetRandomVector(asteroidOffset, asteroidOffset), level - 1);
-		if (asteroidsLeft == 0) {
+		if (--asteroidsLeft == 0) {
 			SpawnWave();
 		}
 	}
 
 	public void onEnemyShipDestroyed() {
+		enemyShipPresent = false;
 		AddPoints(enemyShipPoints);
-		asteroidsLeft--;
+		timeSinceEnemyShip = 0f;
+		if (enemySpawnDelay > 10) enemySpawnDelay -= 10;
+		if (--asteroidsLeft == 0) {
+			SpawnWave();
+		}
 	}
 
 	public void ToggleAimBot() {
