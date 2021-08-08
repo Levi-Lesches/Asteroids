@@ -23,6 +23,7 @@ public class Destructible : MonoBehaviour {
 
 		// Enemies can phase through each other because Unity ignores 
 		// collisions in the "Enemy" layer.
+		if (gameObject.CompareTag("Projectile")) Destroy(gameObject);
 		if (other.CompareTag("Projectile") || (!isInvincible && !other.CompareTag("Border"))) {
 			if (gameObject.CompareTag("Asteroid")) {
 				controller.OnAsteroidDestroyed(transform.position, level);
