@@ -1,0 +1,29 @@
+Bugs: 
+  ☐ Bias asteroid spawning away from the ship
+  ☐ When ship collides with last asteroid, the next wave spawns 
+  ☐ Make aimbot more accurate by taking turning speed into account
+
+Graphics:
+  ☐ Add explosions
+  ☐ Add sounds
+  ☐ Get better sprites for asteroids + ships
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+ ✔ Add HUD: Lives and points @critical @done (21-08-08 02:47) @project(Graphics)
+ ✔ Add invincible animation @critical @done (21-08-08 02:28) @project(Graphics)
+ ✔ Fix border clipping @high @done (21-08-08 02:16) @project(Bugs)
+ ✔ Big asteroids can be completely destroyed in one shot @critical @done (21-08-08 02:04) @project(Bugs)
+ ✔ Add thrust to mobile controls @critical @done (21-08-08 00:31) @project(Bugs)
+ ✔ Add enemy ships @done (21-07-16 02:04) @project(New features)
+ ✔ Small ship comes out after 6,000 points @done (21-07-15 02:58) @project(New features)
+ ✔ Points! Points: 20, 50, 100. Enemy ships: TBD @done (21-07-15 02:58) @project(Graphics)
+ ✔ Figure out correct behavior for additional waves @done (21-07-15 02:58) @project(New features)
+ ✔ Spawns every 30 seconds, then 20 seconds later, then every 10 seconds @done (21-07-15 02:54) @project(New features)
+ ✔ Ships are worth 200 points @done (21-07-15 02:54) @project(New features)
+ ✔ new life every 10,000 points @done (21-07-15 02:46) @project(New features)
+ ✔ Add mobile input @done (21-07-09 15:10) @project(New features)
+ ✔ Adjust scale for windows @done (21-07-09 13:36) @project(Graphics)
+ ✔ Add lives @done (21-07-09 13:26) @project(New features)
+ ✔ Make asteroids split apart @done (21-07-09 13:10) @project(New features)
+ ✔ Add kinematics-based AI @done (21-07-09 10:43) @project(New features)
