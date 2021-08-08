@@ -46,9 +46,10 @@ public class Border : MonoBehaviour {
 	// For example, a ship going through the top border will have its y coordinate
 	// inverted, so it appears to teleport back to the bottom.
 	Vector3 getNewSpawnPosition(Vector2 position) {
+		float factor = isPositive ? 0.25f : -0.25f;
 		switch (axis) {
-			case Axis.Vertical: return new Vector2(position.x, -position.y);
-			case Axis.Horizontal: return new Vector2(-position.x, position.y);
+			case Axis.Vertical: return new Vector2(position.x, -position.y + factor);
+			case Axis.Horizontal: return new Vector2(-position.x + factor, position.y);
 		}
 		return position;
 	}
