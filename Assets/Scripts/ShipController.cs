@@ -56,7 +56,10 @@ public class ShipController : MonoBehaviour {
 		transform.Rotate(rotation);
 
 		// Push the ship forward
-		Vector2 force = Vector2.up * Input.GetAxis("Vertical") * speedBoost * Time.fixedDeltaTime;
+		input = controller.isMobile
+			? controller.hud.thrust
+			: Input.GetAxis("Vertical");
+		Vector2 force = Vector2.up * input * speedBoost * Time.fixedDeltaTime;
 		rigidbody.AddRelativeForce(force);
 		rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, maxSpeed);
 	}
