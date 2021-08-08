@@ -46,6 +46,8 @@ public class GameController : MonoBehaviour {
 		SpawnPlayer();
 		SpawnWave();
 		hud.controls.SetActive(isMobile);
+		hud.SetScore(points);
+		hud.SetLives(lives);
 	}
 
 	// Update is called once per frame
@@ -127,6 +129,7 @@ public class GameController : MonoBehaviour {
 
 	public void OnShipDestroyed() {
 		lives--;
+		hud.SetLives(lives);
 		if (lives == 0)
 			SceneManager.LoadScene("Main");
 		else 
@@ -136,8 +139,11 @@ public class GameController : MonoBehaviour {
 	public void AddPoints(int newPoints) {
 		int oldLives = points / pointsPerLife;
 		points += newPoints;
+		hud.SetScore(points);
 		int newLives = points / pointsPerLife;
 		lives += newLives - oldLives;
+		if (lives > 3) lives = 3;
+		hud.SetLives(lives);
 	}
 
 	public void OnAsteroidDestroyed(Vector3 position, int level) {
