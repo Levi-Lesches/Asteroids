@@ -2316,7 +2316,7 @@ MonoBehaviour:
   lives: 3
   points: 0
   isAimBotEnabled: 0
-  isMobile: 0
+  isMobile: 1
 --- !u!4 &1699995766
 Transform:
   m_ObjectHideFlags: 0

@@ -66,7 +66,6 @@ public class AimBot : MonoBehaviour {
 			return transform.rotation;
 		}
 		Vector3 position = isReady ? GetIntercept(target) : target.transform.position;
-		Debug.DrawLine(transform.position, position, Color.white, 0.5f);
 		Quaternion rotation = GetRotation(position);
 		float angle = rotation.eulerAngles.z;
 		return rotation;
