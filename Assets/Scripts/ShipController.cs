@@ -6,7 +6,9 @@ public class ShipController : MonoBehaviour {
 	public GameObject projectile;
 	public Transform projectileSpawnPoint;
 	public GameController controller;
+	public SpriteRenderer[] sprites;
 
+	public float flashDelay = 1/3;
 	public float projectileSpeed = 10f;
 	public float shootDelay = 0.25f;
 	public float shootGroupDelay = 1f;
@@ -19,6 +21,8 @@ public class ShipController : MonoBehaviour {
 	private float timeSinceLastFired = 0f; 
 	private int shotsFired = 0;
 	private new Rigidbody2D rigidbody;
+	private float timeSinceLastFlash;
+	private bool isVisible = true;
 
 	void Start() {
 		rigidbody = GetComponent<Rigidbody2D>();
@@ -39,6 +43,29 @@ public class ShipController : MonoBehaviour {
 		shotsFired++;
 		if (shotsFired == 4) {
 			shotsFired = 0;
+		}
+	}
+
+	public void StopFlashing() {
+		isVisible = true;
+		timeSinceLastFlash = 0;
+		Flash(true);
+	}
+
+	void Flash(bool visibility) {
+		foreach (SpriteRenderer sprite in sprites) {
+			sprite.enabled = visibility;
+		}
+	}
+
+	public void Update() {
+		if (Destructible.isInvincible) {
+			timeSinceLastFlash += Time.deltaTime;
+			if (timeSinceLastFlash >= flashDelay) {
+				timeSinceLastFlash = 0;
+				isVisible = !isVisible;
+				Flash(isVisible);
+			}
 		}
 	}
 

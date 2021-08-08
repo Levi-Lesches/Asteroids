@@ -54,6 +54,10 @@ MonoBehaviour:
     type: 3}
   projectileSpawnPoint: {fileID: 3908386802579450222}
   controller: {fileID: 0}
+  sprites:
+  - {fileID: 3908386801281812026}
+  - {fileID: 3908386802846918137}
+  flashDelay: 0.33333334
   projectileSpeed: 15
   shootDelay: 0.1
   shootGroupDelay: 0.5

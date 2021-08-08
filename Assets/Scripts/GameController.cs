@@ -70,6 +70,7 @@ public class GameController : MonoBehaviour {
 		Destructible.isInvincible = true;
 		yield return new WaitForSeconds(invincibleDelay);
 		Destructible.isInvincible = false;
+		player.GetComponent<ShipController>().StopFlashing();
 	}
 
 	void SpawnPlayer() {
